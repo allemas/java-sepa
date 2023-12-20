@@ -6,24 +6,29 @@ import static org.junit.Assert.assertThat;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.xml.bind.JAXBException;
+import com.google.common.io.ByteSource;
+import jakarta.xml.bind.JAXBException;
 
 import nl.irp.sepa.BankToCustomerStatement.AccountStatement;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
 
-import com.google.common.io.InputSupplier;
+//import com.google.common.io.InputSupplier;
 import com.google.common.io.Resources;
 
 public class BankToCustomerStatementTest {
 
 	@Test
 	public void test() throws JAXBException, IOException {
-		InputSupplier<InputStream> input = 
-				Resources.newInputStreamSupplier(Resources.getResource("camt.053.001.02.xml"));
-		
-		BankToCustomerStatement bankToCustomerStatement = BankToCustomerStatement.read(input.getInput());
+//		InputSupplier<InputStream> input =
+//				Resources.newInputStreamSupplier(Resources.getResource("src/main/camt.053.001.02.xml"));
+
+
+		ByteSource byteSource = Resources.asByteSource(Resources.getResource("camt.053.001.02.xml"));
+		InputStream input = byteSource.openStream();
+
+		BankToCustomerStatement bankToCustomerStatement = BankToCustomerStatement.read(input);
 		
 		// GrpHdr
 		assertThat(bankToCustomerStatement.getMsgId(), is("AAAASESS-FP-STAT001"));
