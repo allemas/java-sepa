@@ -16,7 +16,12 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
+    <parent>
+        <groupId>com.clevercloud</groupId>
+        <artifactId>moneyboard</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
     <build>
         <plugins>
             <plugin>
