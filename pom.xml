@@ -6,7 +6,7 @@
     <groupId>nl.irp.sepa</groupId>
     <artifactId>sepa-iso20022</artifactId>
     <name>SEPA iso20022 utilities</name>
-    <version>0.0.7</version>
+    <version>0.0.8</version>
     <packaging>jar</packaging>
     <inceptionYear>2012</inceptionYear>
     <licenses>
@@ -16,23 +16,22 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    <parent>
-        <groupId>com.clevercloud</groupId>
-        <artifactId>moneyboard</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
+                <version>3.8.1</version> <!-- Utilisez la version la plus récente du plugin -->
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -47,25 +46,21 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.jvnet.jaxb2.maven2</groupId>
-                <artifactId>maven-jaxb2-plugin</artifactId>
-                <version>0.14.0</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>xjc</id>
                         <goals>
-                            <goal>generate</goal>
+                            <goal>xjc</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <verbose>true</verbose>
-                    <schemaIncludes>
-                        <include>pain.001.001.03.xsd</include>
-                        <include>camt.053.001.02.xsd</include>
-                        <include>pain.008.001.02.xsd</include>
-                        <!-- <include>pain.001.002.02.xsd</include> -->
-                    </schemaIncludes>
-                    <!--<generatePackage>nl.irp.sepa.pain.model</generatePackage>-->
+                    <sources>
+                        <source>src/main/resources/xsd</source>
+                    </sources>
+                    <clearOutputDir>false</clearOutputDir>
                 </configuration>
             </plugin>
             <plugin>
@@ -100,6 +95,11 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>jaxb2-maven-plugin</artifactId>
+            <version>3.1.0</version>
+        </dependency>
         <!-- Apache commons-lang -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -109,8 +109,19 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <version>4.13.1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>4.0.0</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>xmlunit</groupId>
@@ -124,14 +135,14 @@
         <dependency>
             <groupId>org.jdom</groupId>
             <artifactId>jdom2</artifactId>
-            <version>2.0.6</version>
+            <version>2.0.6.1</version>
         </dependency>
 
         <!-- Joda Time - Java date and time API -->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>2.1</version>
+            <version>2.12.5</version>
         </dependency>
 
         <!-- Logging -->
@@ -143,14 +154,21 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.0.1</version>
+            <version>1.2.9</version>
         </dependency>
 
         <!-- Google Guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>11.0.1</version>
+            <version>30.0-android</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.0.0-jre</version>
         </dependency>
     </dependencies>
 
